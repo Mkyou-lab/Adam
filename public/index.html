@@ -5,67 +5,88 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Iya Adam Kitchen — Taste That Feels Like Home</title>
 <link rel="stylesheet" href="css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="brand">
-    <h1>🍲 Iya Adam Kitchen</h1>
-    <p>Taste that feels like home</p>
+<!-- HERO HEADER WITH RESTAURANT PHOTO -->
+<header class="hero-header">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="logo-badge">
+      <i class="fas fa-utensils"></i>
+    </div>
+    <h1 class="brand-title">IYA ADAM KITCHEN</h1>
+    <p class="brand-tagline">✨ Taste That Feels Like Home ✨</p>
+    <p class="brand-sub">Deliciously Prepared • Lovingly Served</p>
   </div>
-  <nav>
-    <button onclick="showTab('menu')">Menu</button>
-    <button onclick="showTab('cart')">Cart <span id="cartCount">0</span></button>
-    <button onclick="showTab('track')">Track Order</button>
-    <button onclick="showTab('comments')">Comments</button>
-    <button id="adminBtn" onclick="openAdminLogin()">Admin</button>
-  </nav>
 </header>
 
-<!-- CUSTOMER MENU TAB -->
+<!-- NAVIGATION -->
+<nav class="main-nav">
+  <button class="nav-btn active" onclick="showTab('menu', this)"><i class="fas fa-utensils"></i> Menu</button>
+  <button class="nav-btn" onclick="showTab('cart', this)"><i class="fas fa-shopping-cart"></i> Cart <span id="cartCount" class="badge">0</span></button>
+  <button class="nav-btn" onclick="showTab('track', this)"><i class="fas fa-truck"></i> Track</button>
+  <button class="nav-btn" onclick="showTab('comments', this)"><i class="fas fa-comments"></i> Reviews</button>
+  <button class="nav-btn admin-nav" id="adminBtn" onclick="openAdminLogin()"><i class="fas fa-lock"></i> Admin</button>
+</nav>
+
+<!-- CUSTOMER MENU -->
 <section id="tab-menu" class="tab active">
+  <div class="section-header">
+    <h2><i class="fas fa-book-open"></i> Our Delicious Menu</h2>
+    <p>Fresh ingredients • Hygienic • Great taste</p>
+  </div>
   <div id="menuContainer"></div>
 </section>
 
-<!-- CART TAB -->
+<!-- CART -->
 <section id="tab-cart" class="tab">
-  <h2>🛒 Your Cart</h2>
+  <div class="section-header">
+    <h2><i class="fas fa-shopping-basket"></i> Your Order</h2>
+  </div>
   <div id="cartItems"></div>
   <div id="cartTotal"></div>
   <div class="checkout-form" id="checkoutForm" style="display:none;">
-    <h3>Checkout</h3>
-    <input type="text" id="custName" placeholder="Your Name" required>
+    <h3><i class="fas fa-user"></i> Delivery Details</h3>
+    <input type="text" id="custName" placeholder="Full Name" required>
     <input type="text" id="custPhone" placeholder="Phone Number" required>
-    <textarea id="custNote" placeholder="Special notes (optional)"></textarea>
-    <button class="btn-primary" onclick="submitOrder()">Place Order</button>
+    <textarea id="custNote" placeholder="Special requests (delivery address, allergies, etc.)"></textarea>
+    <button class="btn-primary btn-large" onclick="submitOrder()"><i class="fas fa-check-circle"></i> Place Order</button>
   </div>
 </section>
 
-<!-- TRACK ORDER TAB -->
+<!-- TRACK ORDER -->
 <section id="tab-track" class="tab">
-  <h2>📦 Track Your Order</h2>
-  <input type="text" id="trackId" placeholder="Enter Order ID (e.g. O1234567890)">
-  <button class="btn-primary" onclick="trackOrder()">Track</button>
+  <div class="section-header">
+    <h2><i class="fas fa-map-marker-alt"></i> Track Your Order</h2>
+  </div>
+  <div class="track-box">
+    <input type="text" id="trackId" placeholder="Enter Order ID (e.g. O1234567890)">
+    <button class="btn-primary" onclick="trackOrder()"><i class="fas fa-search"></i> Track</button>
+  </div>
   <div id="trackResult"></div>
   <div id="chatBox" style="display:none;">
-    <h3>💬 Chat with Kitchen</h3>
+    <h3><i class="fas fa-comments"></i> Chat with Kitchen</h3>
     <div id="chatMessages"></div>
     <div class="chat-input">
-      <input type="text" id="chatText" placeholder="Type message...">
-      <button onclick="sendChat()">Send</button>
+      <input type="text" id="chatText" placeholder="Type your message..." onkeypress="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()"><i class="fas fa-paper-plane"></i></button>
     </div>
   </div>
 </section>
 
-<!-- COMMENTS TAB -->
+<!-- COMMENTS -->
 <section id="tab-comments" class="tab">
-  <h2>💬 Customer Comments</h2>
+  <div class="section-header">
+    <h2><i class="fas fa-heart"></i> Customer Reviews</h2>
+    <p>Share your dining experience with us</p>
+  </div>
   <div class="comment-form">
     <input type="text" id="commentName" placeholder="Your Name">
-    <textarea id="commentText" placeholder="Leave a comment..."></textarea>
-    <button class="btn-primary" onclick="postComment()">Post Comment</button>
+    <textarea id="commentText" placeholder="Share your thoughts about our food..."></textarea>
+    <button class="btn-primary" onclick="postComment()"><i class="fas fa-paper-plane"></i> Post Review</button>
   </div>
   <div id="commentsList"></div>
 </section>
@@ -73,45 +94,111 @@
 <!-- ADMIN LOGIN MODAL -->
 <div id="adminModal" class="modal">
   <div class="modal-content">
-    <h2>🔒 Admin Login</h2>
-    <input type="password" id="adminPass" placeholder="Admin Password">
-    <button class="btn-primary" onclick="adminLogin()">Login</button>
-    <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+    <div class="modal-icon"><i class="fas fa-user-shield"></i></div>
+    <h2>Admin Login</h2>
+    <p>Enter password to access dashboard</p>
+    <input type="password" id="adminPass" placeholder="Admin Password" onkeypress="if(event.key==='Enter')adminLogin()">
+    <div class="modal-buttons">
+      <button class="btn-primary" onclick="adminLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+    </div>
   </div>
 </div>
 
 <!-- ADMIN DASHBOARD -->
 <section id="tab-admin" class="tab">
-  <h2>⚙️ Admin Dashboard</h2>
+  <!-- Admin Hero with Restaurant Photo -->
+  <div class="admin-hero">
+    <div class="admin-hero-overlay"></div>
+    <div class="admin-hero-content">
+      <h1><i class="fas fa-crown"></i> Admin Dashboard</h1>
+      <p>Welcome back to Iya Adam Kitchen</p>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card orange">
+      <div class="stat-icon"><i class="fas fa-clipboard-list"></i></div>
+      <div class="stat-info">
+        <h3 id="statOrders">0</h3>
+        <p>Total Orders</p>
+      </div>
+    </div>
+    <div class="stat-card yellow">
+      <div class="stat-icon"><i class="fas fa-clock"></i></div>
+      <div class="stat-info">
+        <h3 id="statPending">0</h3>
+        <p>Pending</p>
+      </div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+      <div class="stat-info">
+        <h3 id="statDelivered">0</h3>
+        <p>Delivered</p>
+      </div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+      <div class="stat-info">
+        <h3 id="statRevenue">₦0</h3>
+        <p>Revenue</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Tabs -->
   <div class="admin-tabs">
-    <button onclick="showAdminTab('orders')">Orders</button>
-    <button onclick="showAdminTab('manage')">Manage Menu</button>
-    <button onclick="showAdminTab('add')">Add Item</button>
-    <button onclick="showAdminTab('comments')">Comments</button>
-    <button onclick="showAdminTab('chats')">Chats</button>
-    <button onclick="resetMenu()" class="btn-danger">Reset Menu</button>
-    <button onclick="adminLogout()" class="btn-secondary">Logout</button>
+    <button class="admin-tab-btn active" onclick="showAdminTab('orders', this)"><i class="fas fa-receipt"></i> Orders</button>
+    <button class="admin-tab-btn" onclick="showAdminTab('manage', this)"><i class="fas fa-utensils"></i> Menu</button>
+    <button class="admin-tab-btn" onclick="showAdminTab('add', this)"><i class="fas fa-plus-circle"></i> Add Item</button>
+    <button class="admin-tab-btn" onclick="showAdminTab('comments', this)"><i class="fas fa-comment-dots"></i> Reviews</button>
+    <button class="admin-tab-btn" onclick="showAdminTab('chats', this)"><i class="fas fa-envelope"></i> Chats</button>
+    <button class="btn-danger" onclick="resetMenu()"><i class="fas fa-redo"></i> Reset Menu</button>
+    <button class="btn-secondary" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
   </div>
 
   <div id="admin-orders" class="admin-tab active"></div>
   <div id="admin-manage" class="admin-tab"></div>
   <div id="admin-add" class="admin-tab">
-    <h3>Add New Menu Item</h3>
-    <select id="newCat"></select>
-    <input type="text" id="newCatCustom" placeholder="Or new category name">
-    <input type="text" id="newName" placeholder="Food Name">
-    <input type="number" id="newPrice" placeholder="Price (Naira)">
-    <input type="text" id="newImage" placeholder="Image URL">
-    <button class="btn-primary" onclick="addMenuItem()">Add Item</button>
+    <div class="add-item-form">
+      <h3><i class="fas fa-plus"></i> Add New Menu Item</h3>
+      <label>Existing Category</label>
+      <select id="newCat"></select>
+      <label>Or New Category Name</label>
+      <input type="text" id="newCatCustom" placeholder="e.g. Breakfast, Desserts">
+      <label>Food Name</label>
+      <input type="text" id="newName" placeholder="e.g. Amala Special">
+      <label>Price (₦)</label>
+      <input type="number" id="newPrice" placeholder="500">
+      <label>Image URL</label>
+      <input type="text" id="newImage" placeholder="Paste image link from imgbb.com or unsplash.com">
+      <button class="btn-primary btn-large" onclick="addMenuItem()"><i class="fas fa-check"></i> Add to Menu</button>
+    </div>
   </div>
   <div id="admin-comments" class="admin-tab"></div>
   <div id="admin-chats" class="admin-tab"></div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <p>📞 WhatsApp: 07065214656 | 08033808290</p>
-  <p>🎵 TikTok: Iya Adam Kitchen</p>
-  <p>© 2026 Iya Adam Kitchen — Fresh Ingredients • Hygienic • Great Taste</p>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3><i class="fas fa-utensils"></i> Iya Adam Kitchen</h3>
+      <p>Taste that feels like home</p>
+    </div>
+    <div class="footer-contact">
+      <p><i class="fab fa-whatsapp"></i> 07065214656 | 08033808290</p>
+      <p><i class="fab fa-tiktok"></i> Iya Adam Kitchen</p>
+    </div>
+    <div class="footer-features">
+      <span><i class="fas fa-leaf"></i> Fresh Ingredients</span>
+      <span><i class="fas fa-shield-alt"></i> Hygienic</span>
+      <span><i class="fas fa-star"></i> Best Service</span>
+    </div>
+  </div>
+  <p class="copyright">© 2026 Iya Adam Kitchen. All rights reserved.</p>
 </footer>
 
 <script src="/socket.io/socket.io.js"></script>
