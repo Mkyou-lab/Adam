@@ -1,4 +1,3 @@
-const PORT = process.env.PORT || 3000;
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -9,9 +8,12 @@ const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+const io = new Server(server, { 
+  cors: { origin: '*', methods: ['GET', 'POST'] } 
+});
 
 const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
 const ADMIN_PASSWORD = 'Iyaadam2026';
 const DATA_FILE = path.join(__dirname, 'data.json');
 
@@ -23,33 +25,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 const defaultMenu = {
   Swallows: [
     { id: 's1', name: 'Amala', price: 500, image: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400' },
-    { id: 's2', name: 'Eba', price: 300, image: 'https://i.pinimg.com/originals/1e/4c/8d/1e4c8d5c8e2f9c4b8a3d5e6f7a8b9c0d.jpg' },
-    { id: 's3', name: 'Semo', price: 300, image: 'https://i.pinimg.com/originals/2a/3b/4c/2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d.jpg' },
-    { id: 's4', name: 'Plantain Swallow', price: 1000, image: 'https://i.pinimg.com/originals/3b/4c/5d/3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e.jpg' },
-    { id: 's5', name: 'Pounded Yam', price: 500, image: 'https://i.pinimg.com/originals/4c/5d/6e/4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f.jpg' },
-    { id: 's6', name: 'Tuwo', price: 600, image: 'https://i.pinimg.com/originals/5d/6e/7f/5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a.jpg' }
+    { id: 's2', name: 'Eba', price: 300, image: 'https://images.unsplash.com/photo-1567337710282-00832b415979?w=400' },
+    { id: 's3', name: 'Semo', price: 300, image: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400' },
+    { id: 's4', name: 'Plantain Swallow', price: 1000, image: 'https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?w=400' },
+    { id: 's5', name: 'Pounded Yam', price: 500, image: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400' },
+    { id: 's6', name: 'Tuwo', price: 600, image: 'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=400' }
   ],
   Soups: [
     { id: 'sp1', name: 'Efo Riro (per spoon)', price: 500, image: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=400' },
-    { id: 'sp2', name: 'Egusi Soup', price: 800, image: 'https://i.pinimg.com/originals/6e/7f/8a/6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b.jpg' },
-    { id: 'sp3', name: 'Ewedu', price: 500, image: 'https://i.pinimg.com/originals/7f/8a/9b/7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c.jpg' },
-    { id: 'sp4', name: 'Gbegiri', price: 500, image: 'https://i.pinimg.com/originals/8a/9b/0c/8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d.jpg' },
-    { id: 'sp5', name: 'Ogbono Soup', price: 800, image: 'https://i.pinimg.com/originals/9b/0c/1d/9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e.jpg' },
-    { id: 'sp6', name: 'Egbo Stew', price: 600, image: 'https://i.pinimg.com/originals/0c/1d/2e/0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f.jpg' },
-    { id: 'sp7', name: 'Beans Stew', price: 600, image: 'https://i.pinimg.com/originals/1d/2e/3f/1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a.jpg' }
+    { id: 'sp2', name: 'Egusi Soup', price: 800, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400' },
+    { id: 'sp3', name: 'Ewedu', price: 500, image: 'https://images.unsplash.com/photo-1543353071-10c8ba85a904?w=400' },
+    { id: 'sp4', name: 'Gbegiri', price: 500, image: 'https://images.unsplash.com/photo-1604152135912-04a022e23696?w=400' },
+    { id: 'sp5', name: 'Ogbono Soup', price: 800, image: 'https://images.unsplash.com/photo-1626200925465-c8e9c1e1a3f7?w=400' },
+    { id: 'sp6', name: 'Egbo Stew', price: 600, image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400' },
+    { id: 'sp7', name: 'Beans Stew', price: 600, image: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400' }
   ],
   Rice: [
     { id: 'r1', name: 'White Rice (per spoon)', price: 500, image: 'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=400' },
     { id: 'r2', name: 'Fried Rice (per spoon)', price: 500, image: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400' },
     { id: 'r3', name: 'Jollof Rice (per spoon)', price: 500, image: 'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400' },
-    { id: 'r4', name: 'Asun Rice', price: 1000, image: 'https://i.pinimg.com/originals/2e/3f/4a/2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b.jpg' },
+    { id: 'r4', name: 'Asun Rice', price: 1000, image: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400' },
     { id: 'r5', name: 'Pasta', price: 800, image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400' }
   ],
   'Local Dishes': [
-    { id: 'l1', name: 'Yam Porridge', price: 500, image: 'https://i.pinimg.com/originals/3f/4a/5b/3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c.jpg' },
-    { id: 'l2', name: 'Ewa Agoyin & Beans (per spoon)', price: 500, image: 'https://i.pinimg.com/originals/4a/5b/6c/4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d.jpg' },
-    { id: 'l3', name: 'Beans (per spoon)', price: 500, image: 'https://i.pinimg.com/originals/5b/6c/7d/5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e.jpg' },
-    { id: 'l4', name: 'Beans & Potatoes', price: 700, image: 'https://i.pinimg.com/originals/6c/7d/8e/6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f.jpg' }
+    { id: 'l1', name: 'Yam Porridge', price: 500, image: 'https://images.unsplash.com/photo-1604908812836-3a90ce4b0e97?w=400' },
+    { id: 'l2', name: 'Ewa Agoyin & Beans (per spoon)', price: 500, image: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=400' },
+    { id: 'l3', name: 'Beans (per spoon)', price: 500, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400' },
+    { id: 'l4', name: 'Beans & Potatoes', price: 700, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400' }
   ],
   'Proteins (Rice Meals)': [
     { id: 'pr1', name: 'Grilled Turkey', price: 6000, image: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?w=400' },
@@ -57,22 +59,22 @@ const defaultMenu = {
     { id: 'pr3', name: 'Small Chicken', price: 2800, image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400' },
     { id: 'pr4', name: 'Drumstick', price: 1500, image: 'https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=400' },
     { id: 'pr5', name: 'Steak Meat', price: 2000, image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400' },
-    { id: 'pr6', name: 'Chicken Gizzard', price: 2000, image: 'https://i.pinimg.com/originals/7d/8e/9f/7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a.jpg' },
-    { id: 'pr7', name: 'Turkey Gizzard', price: 2000, image: 'https://i.pinimg.com/originals/8e/9f/0a/8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b.jpg' }
+    { id: 'pr6', name: 'Chicken Gizzard', price: 2000, image: 'https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400' },
+    { id: 'pr7', name: 'Turkey Gizzard', price: 2000, image: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?w=400' }
   ],
   'Proteins (Swallow Meals)': [
     { id: 'ps1', name: 'Goat Meat', price: 3000, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400' },
     { id: 'ps2', name: 'Titus Fish', price: 2500, image: 'https://images.unsplash.com/photo-1535140728325-a4d3707eee94?w=400' },
-    { id: 'ps3', name: 'Assorted Meat', price: 600, image: 'https://i.pinimg.com/originals/9f/0a/1b/9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c.jpg' },
+    { id: 'ps3', name: 'Assorted Meat', price: 600, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400' },
     { id: 'ps4', name: 'Catfish', price: 2500, image: 'https://images.unsplash.com/photo-1611599537845-1c7aca0091c0?w=400' },
     { id: 'ps5', name: 'Tilapia Fish', price: 3000, image: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?w=400' },
-    { id: 'ps6', name: 'Croaker Fish', price: 3000, image: 'https://i.pinimg.com/originals/0a/1b/2c/0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d.jpg' },
-    { id: 'ps7', name: 'Smoked Catfish', price: 3000, image: 'https://i.pinimg.com/originals/1b/2c/3d/1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e.jpg' },
-    { id: 'ps8', name: 'Hake Fish', price: 3000, image: 'https://i.pinimg.com/originals/2c/3d/4e/2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f.jpg' },
-    { id: 'ps9', name: 'Ponmo', price: 600, image: 'https://i.pinimg.com/originals/3d/4e/5f/3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a.jpg' }
+    { id: 'ps6', name: 'Croaker Fish', price: 3000, image: 'https://images.unsplash.com/photo-1535140728325-a4d3707eee94?w=400' },
+    { id: 'ps7', name: 'Smoked Catfish', price: 3000, image: 'https://images.unsplash.com/photo-1611599537845-1c7aca0091c0?w=400' },
+    { id: 'ps8', name: 'Hake Fish', price: 3000, image: 'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?w=400' },
+    { id: 'ps9', name: 'Ponmo', price: 600, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400' }
   ],
   'Sides/Extras': [
-    { id: 'sd1', name: 'Moi Moi', price: 500, image: 'https://i.pinimg.com/originals/4e/5f/6a/4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b.jpg' },
+    { id: 'sd1', name: 'Moi Moi', price: 500, image: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400' },
     { id: 'sd2', name: 'Fried Plantain', price: 500, image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400' },
     { id: 'sd3', name: 'Salad', price: 1000, image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400' }
   ],
@@ -80,26 +82,26 @@ const defaultMenu = {
     { id: 'd1', name: 'Water', price: 300, image: 'https://images.unsplash.com/photo-1560023907-5f339617ea30?w=400' },
     { id: 'd2', name: 'Natural Fruit Juice', price: 1500, image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400' },
     { id: 'd3', name: 'Smoothie', price: 2000, image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400' },
-    { id: 'd4', name: 'Active', price: 2200, image: 'https://i.pinimg.com/originals/5f/6a/7b/5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c.jpg' },
-    { id: 'd5', name: 'Exotic', price: 2200, image: 'https://i.pinimg.com/originals/6a/7b/8c/6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d.jpg' },
-    { id: 'd6', name: 'V-Smart / V-Joy', price: 2200, image: 'https://i.pinimg.com/originals/7b/8c/9d/7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e.jpg' },
+    { id: 'd4', name: 'Active', price: 2200, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400' },
+    { id: 'd5', name: 'Exotic', price: 2200, image: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400' },
+    { id: 'd6', name: 'V-Smart / V-Joy', price: 2200, image: 'https://images.unsplash.com/photo-1596803244897-c1e2c9e0e04a?w=400' },
     { id: 'd7', name: 'Coke', price: 500, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400' },
-    { id: 'd8', name: 'Fanta', price: 500, image: 'https://i.pinimg.com/originals/8c/9d/0e/8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f.jpg' },
-    { id: 'd9', name: 'Sprite', price: 500, image: 'https://i.pinimg.com/originals/9d/0e/1f/9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a.jpg' },
-    { id: 'd10', name: 'Pepsi', price: 500, image: 'https://i.pinimg.com/originals/0e/1f/2a/0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b.jpg' },
-    { id: 'd11', name: 'Farouz', price: 800, image: 'https://i.pinimg.com/originals/1f/2a/3b/1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c.jpg' },
-    { id: 'd12', name: 'Can Malt', price: 800, image: 'https://i.pinimg.com/originals/2a/3b/4c/2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d.jpg' },
-    { id: 'd13', name: 'Plastic Malt', price: 800, image: 'https://i.pinimg.com/originals/3b/4c/5d/3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e.jpg' },
-    { id: 'd14', name: 'Can Coke', price: 700, image: 'https://i.pinimg.com/originals/4c/5d/6e/4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f.jpg' },
-    { id: 'd15', name: 'Five Alive Pulpy', price: 1700, image: 'https://i.pinimg.com/originals/5d/6e/7f/5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a.jpg' },
-    { id: 'd16', name: 'Zobo', price: 1200, image: 'https://i.pinimg.com/originals/6e/7f/8a/6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b.jpg' },
-    { id: 'd17', name: 'Tigernut Drink', price: 1500, image: 'https://i.pinimg.com/originals/7f/8a/9b/7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c.jpg' },
-    { id: 'd18', name: 'Vita Milk', price: 2000, image: 'https://i.pinimg.com/originals/8a/9b/0c/8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d.jpg' },
-    { id: 'd19', name: 'Wheat & Chocolate Drink', price: 1200, image: 'https://i.pinimg.com/originals/9b/0c/1d/9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e.jpg' }
+    { id: 'd8', name: 'Fanta', price: 500, image: 'https://images.unsplash.com/photo-1624517452488-04869289c4ca?w=400' },
+    { id: 'd9', name: 'Sprite', price: 500, image: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400' },
+    { id: 'd10', name: 'Pepsi', price: 500, image: 'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=400' },
+    { id: 'd11', name: 'Farouz', price: 800, image: 'https://images.unsplash.com/photo-1596803244897-c1e2c9e0e04a?w=400' },
+    { id: 'd12', name: 'Can Malt', price: 800, image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400' },
+    { id: 'd13', name: 'Plastic Malt', price: 800, image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400' },
+    { id: 'd14', name: 'Can Coke', price: 700, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400' },
+    { id: 'd15', name: 'Five Alive Pulpy', price: 1700, image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400' },
+    { id: 'd16', name: 'Zobo', price: 1200, image: 'https://images.unsplash.com/photo-1622597467836-f3e6047cc116?w=400' },
+    { id: 'd17', name: 'Tigernut Drink', price: 1500, image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400' },
+    { id: 'd18', name: 'Vita Milk', price: 2000, image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400' },
+    { id: 'd19', name: 'Wheat & Chocolate Drink', price: 1200, image: 'https://images.unsplash.com/photo-1542990253-0b8be7bb9b0e?w=400' }
   ],
   Packaging: [
-    { id: 'pk1', name: 'Takeaway Pack', price: 500, image: 'https://i.pinimg.com/originals/0c/1d/2e/0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f.jpg' },
-    { id: 'pk2', name: 'Small Takeaway Pack', price: 300, image: 'https://i.pinimg.com/originals/1d/2e/3f/1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a.jpg' }
+    { id: 'pk1', name: 'Takeaway Pack', price: 500, image: 'https://images.unsplash.com/photo-1620146344904-097a0002d6d6?w=400' },
+    { id: 'pk2', name: 'Small Takeaway Pack', price: 300, image: 'https://images.unsplash.com/photo-1620146344904-097a0002d6d6?w=400' }
   ]
 };
 
@@ -109,32 +111,50 @@ let store = { menu: defaultMenu, orders: [], comments: [], messages: [] };
 function loadData() {
   try {
     if (fs.existsSync(DATA_FILE)) {
-      store = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      const raw = fs.readFileSync(DATA_FILE, 'utf8');
+      store = JSON.parse(raw);
       if (!store.menu) store.menu = defaultMenu;
       if (!store.orders) store.orders = [];
       if (!store.comments) store.comments = [];
       if (!store.messages) store.messages = [];
+      console.log('✅ Data loaded from file');
     } else {
       saveData();
+      console.log('✅ New data file created');
     }
-  } catch (e) { console.error('Load error:', e); }
+  } catch (e) {
+    console.error('⚠️ Load error:', e.message);
+    store = { menu: defaultMenu, orders: [], comments: [], messages: [] };
+  }
 }
+
 function saveData() {
-  try { fs.writeFileSync(DATA_FILE, JSON.stringify(store, null, 2)); }
-  catch (e) { console.error('Save error:', e); }
+  try {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(store, null, 2));
+  } catch (e) {
+    console.error('⚠️ Save error:', e.message);
+  }
 }
+
 loadData();
 
 // ---------- Auth Middleware ----------
 function checkAdmin(req, res, next) {
-  const pass = req.headers['x-admin-password'] || req.body.password;
+  const pass = req.headers['x-admin-password'] || (req.body && req.body.password);
   if (pass === ADMIN_PASSWORD) return next();
   return res.status(401).json({ error: 'Unauthorized' });
 }
 
+// ---------- Health Check ----------
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', uptime: process.uptime() });
+});
+
 // ---------- API Routes ----------
 app.post('/api/admin/login', (req, res) => {
-  if (req.body.password === ADMIN_PASSWORD) return res.json({ ok: true });
+  if (req.body && req.body.password === ADMIN_PASSWORD) {
+    return res.json({ ok: true });
+  }
   res.status(401).json({ ok: false });
 });
 
@@ -142,6 +162,7 @@ app.get('/api/menu', (req, res) => res.json(store.menu));
 
 app.post('/api/menu/add', checkAdmin, (req, res) => {
   const { category, item } = req.body;
+  if (!category || !item) return res.status(400).json({ error: 'Missing data' });
   if (!store.menu[category]) store.menu[category] = [];
   item.id = 'x' + Date.now();
   store.menu[category].push(item);
@@ -164,9 +185,11 @@ app.post('/api/menu/update', checkAdmin, (req, res) => {
   const { category, id, item } = req.body;
   if (store.menu[category]) {
     const idx = store.menu[category].findIndex(i => i.id === id);
-    if (idx >= 0) store.menu[category][idx] = { ...store.menu[category][idx], ...item };
-    saveData();
-    io.emit('menuUpdated', store.menu);
+    if (idx >= 0) {
+      store.menu[category][idx] = { ...store.menu[category][idx], ...item };
+      saveData();
+      io.emit('menuUpdated', store.menu);
+    }
   }
   res.json({ ok: true });
 });
@@ -178,30 +201,35 @@ app.post('/api/menu/reset', checkAdmin, (req, res) => {
   res.json({ ok: true });
 });
 
-// Orders
+// ---------- Orders ----------
 app.post('/api/order', (req, res) => {
-  const order = {
-    id: 'O' + Date.now(),
-    customer: req.body.customer,
-    phone: req.body.phone,
-    items: req.body.items,
-    total: req.body.total,
-    note: req.body.note || '',
-    status: 'Pending',
-    createdAt: new Date().toISOString()
-  };
-  store.orders.unshift(order);
-  saveData();
-  io.emit('newOrder', order);
-  io.emit('ordersUpdated', store.orders);
-  res.json({ ok: true, orderId: order.id });
+  try {
+    const order = {
+      id: 'O' + Date.now(),
+      customer: req.body.customer || 'Guest',
+      phone: req.body.phone || '',
+      items: req.body.items || [],
+      total: req.body.total || 0,
+      note: req.body.note || '',
+      status: 'Pending',
+      createdAt: new Date().toISOString()
+    };
+    store.orders.unshift(order);
+    saveData();
+    io.emit('newOrder', order);
+    io.emit('ordersUpdated', store.orders);
+    res.json({ ok: true, orderId: order.id });
+  } catch (e) {
+    console.error('Order error:', e);
+    res.status(500).json({ error: 'Failed to create order' });
+  }
 });
 
 app.get('/api/orders', (req, res) => res.json(store.orders));
 
 app.get('/api/order/:id', (req, res) => {
   const o = store.orders.find(x => x.id === req.params.id);
-  if (!o) return res.status(404).json({ error: 'Not found' });
+  if (!o) return res.status(404).json({ error: 'Order not found' });
   res.json(o);
 });
 
@@ -224,20 +252,23 @@ app.post('/api/order/delete', checkAdmin, (req, res) => {
   res.json({ ok: true });
 });
 
-// Comments
+// ---------- Comments ----------
 app.get('/api/comments', (req, res) => res.json(store.comments));
+
 app.post('/api/comment', (req, res) => {
   const c = {
     id: 'C' + Date.now(),
-    name: req.body.name || 'Anonymous',
-    text: req.body.text,
+    name: (req.body.name || 'Anonymous').substring(0, 50),
+    text: (req.body.text || '').substring(0, 500),
     createdAt: new Date().toISOString()
   };
+  if (!c.text) return res.status(400).json({ error: 'Empty comment' });
   store.comments.unshift(c);
   saveData();
   io.emit('newComment', c);
   res.json({ ok: true });
 });
+
 app.post('/api/comment/delete', checkAdmin, (req, res) => {
   store.comments = store.comments.filter(c => c.id !== req.body.id);
   saveData();
@@ -245,35 +276,86 @@ app.post('/api/comment/delete', checkAdmin, (req, res) => {
   res.json({ ok: true });
 });
 
-// Messages (Chat)
+// ---------- Messages / Chat ----------
 app.get('/api/messages/:orderId', (req, res) => {
   res.json(store.messages.filter(m => m.orderId === req.params.orderId));
 });
+
 app.get('/api/messages', checkAdmin, (req, res) => res.json(store.messages));
 
-// ---------- Socket.io Chat ----------
-io.on('connection', socket => {
-  socket.on('joinOrder', orderId => socket.join('order_' + orderId));
-  socket.on('joinAdmin', pass => { if (pass === ADMIN_PASSWORD) socket.join('admin'); });
+// ---------- Socket.io Real-time Chat ----------
+io.on('connection', (socket) => {
+  console.log('🔌 Client connected:', socket.id);
 
-  socket.on('chatMessage', msg => {
-    const message = {
-      id: 'M' + Date.now(),
-      orderId: msg.orderId,
-      from: msg.from, // 'customer' or 'admin'
-      name: msg.name || (msg.from === 'admin' ? 'Kitchen' : 'Customer'),
-      text: msg.text,
-      createdAt: new Date().toISOString()
-    };
-    store.messages.push(message);
-    saveData();
-    io.to('order_' + msg.orderId).emit('chatMessage', message);
-    io.to('admin').emit('chatMessage', message);
+  socket.on('joinOrder', (orderId) => {
+    if (orderId) socket.join('order_' + orderId);
+  });
+
+  socket.on('joinAdmin', (pass) => {
+    if (pass === ADMIN_PASSWORD) socket.join('admin');
+  });
+
+  socket.on('chatMessage', (msg) => {
+    try {
+      if (!msg || !msg.orderId || !msg.text) return;
+      const message = {
+        id: 'M' + Date.now(),
+        orderId: msg.orderId,
+        from: msg.from === 'admin' ? 'admin' : 'customer',
+        name: msg.name || (msg.from === 'admin' ? 'Kitchen' : 'Customer'),
+        text: String(msg.text).substring(0, 500),
+        createdAt: new Date().toISOString()
+      };
+      store.messages.push(message);
+      saveData();
+      io.to('order_' + msg.orderId).emit('chatMessage', message);
+      io.to('admin').emit('chatMessage', message);
+    } catch (e) {
+      console.error('Chat error:', e);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log('❌ Client disconnected:', socket.id);
   });
 });
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`🍲 Iya Adam Kitchen running on port ${PORT}`);
-  console.log(`Public:  http://localhost:${PORT}/`);
-  console.log(`Admin:   http://localhost:${PORT}/?admin=1`);
+// ---------- Fallback Route (SPA) ----------
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// ---------- Error Handler ----------
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
+// ---------- Start Server ----------
+server.listen(PORT, HOST, () => {
+  console.log('====================================');
+  console.log('🍲 IYA ADAM KITCHEN - SERVER STARTED');
+  console.log('====================================');
+  console.log(`✅ Listening on ${HOST}:${PORT}`);
+  console.log(`🌐 Public URL: http://localhost:${PORT}/`);
+  console.log(`🔒 Admin URL:  http://localhost:${PORT}/?admin=1`);
+  console.log(`🔑 Admin Password: ${ADMIN_PASSWORD}`);
+  console.log('====================================');
+});
+
+// ---------- Graceful Shutdown ----------
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  server.close(() => {
+    saveData();
+    process.exit(0);
+  });
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Rejection:', reason);
 });
