@@ -272,7 +272,7 @@ io.on('connection', socket => {
   });
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`🍲 Iya Adam Kitchen running on port ${PORT}`);
   console.log(`Public:  http://localhost:${PORT}/`);
   console.log(`Admin:   http://localhost:${PORT}/?admin=1`);
