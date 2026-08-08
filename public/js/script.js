@@ -15,15 +15,20 @@ window.addEventListener('load', () => {
 });
 
 // ---------- Tabs ----------
-function showTab(name) {
+function showTab(name, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
   if (name === 'cart') renderCart();
   if (name === 'comments') loadComments();
+  window.scrollTo({top:0, behavior:'smooth'});
 }
-function showAdminTab(name) {
+function showAdminTab(name, btn) {
   document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('admin-' + name).classList.add('active');
+  document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
   if (name === 'orders') loadAdminOrders();
   if (name === 'manage') renderManageMenu();
   if (name === 'comments') loadAdminComments();
@@ -232,21 +237,29 @@ function adminLogout() { isAdmin=false; adminPassword=''; showTab('menu'); }
 async function loadAdminOrders() {
   const res = await fetch('/api/orders');
   const orders = await res.json();
+  
+  // Update stats
+  document.getElementById('statOrders').textContent = orders.length;
+  document.getElementById('statPending').textContent = orders.filter(o => o.status === 'Pending').length;
+  document.getElementById('statDelivered').textContent = orders.filter(o => o.status === 'Delivered').length;
+  const revenue = orders.filter(o => o.status === 'Delivered').reduce((s,o) => s + o.total, 0);
+  document.getElementById('statRevenue').textContent = '₦' + revenue.toLocaleString();
+  
   const c = document.getElementById('admin-orders');
-  c.innerHTML = '<h3>All Orders</h3>' + (orders.length===0 ? '<p>No orders yet.</p>' :
+  c.innerHTML = '<h3 style="color:#E85A0C;margin-bottom:15px;"><i class="fas fa-receipt"></i> All Orders</h3>' + (orders.length===0 ? '<p style="text-align:center;padding:30px;color:#888;">No orders yet.</p>' :
     orders.map(o => `
       <div class="admin-order">
-        <h4>${o.id} — ${o.customer} (${o.phone})</h4>
+        <h4><i class="fas fa-shopping-bag"></i> ${o.id} — ${o.customer} <small style="color:#888;">(${o.phone})</small></h4>
         <p><strong>Total:</strong> ₦${o.total.toLocaleString()} | <strong>Time:</strong> ${new Date(o.createdAt).toLocaleString()}</p>
         <p><strong>Items:</strong> ${o.items.map(i=>`${i.name} ×${i.qty}`).join(', ')}</p>
         ${o.note?`<p><strong>Note:</strong> ${o.note}</p>`:''}
-        <p><strong>Status:</strong> <span class="status-badge status-${o.status}">${o.status}</span></p>
+        <p style="margin:10px 0;"><strong>Status:</strong> <span class="status-badge status-${o.status}">${o.status}</span></p>
         <select id="st_${o.id}">
           ${['Pending','Preparing','Ready','Delivered','Cancelled'].map(s=>`<option ${o.status===s?'selected':''}>${s}</option>`).join('')}
         </select>
-        <button class="btn-primary" onclick="updateStatus('${o.id}')">Update</button>
-        <button class="btn-danger" onclick="deleteOrder('${o.id}')">Delete</button>
-        <button class="btn-secondary" onclick="openAdminChat('${o.id}')">Chat</button>
+        <button class="btn-primary" onclick="updateStatus('${o.id}')"><i class="fas fa-sync"></i> Update</button>
+        <button class="btn-danger" onclick="deleteOrder('${o.id}')"><i class="fas fa-trash"></i> Delete</button>
+        <button class="btn-secondary" onclick="openAdminChat('${o.id}')"><i class="fas fa-comment"></i> Chat</button>
       </div>`).join(''));
 }
 
