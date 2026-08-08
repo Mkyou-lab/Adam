@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Iya Adam Kitchen — Taste That Feels Like Home</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="brand">
+    <h1>🍲 Iya Adam Kitchen</h1>
+    <p>Taste that feels like home</p>
+  </div>
+  <nav>
+    <button onclick="showTab('menu')">Menu</button>
+    <button onclick="showTab('cart')">Cart <span id="cartCount">0</span></button>
+    <button onclick="showTab('track')">Track Order</button>
+    <button onclick="showTab('comments')">Comments</button>
+    <button id="adminBtn" onclick="openAdminLogin()">Admin</button>
+  </nav>
+</header>
+
+<!-- CUSTOMER MENU TAB -->
+<section id="tab-menu" class="tab active">
+  <div id="menuContainer"></div>
+</section>
+
+<!-- CART TAB -->
+<section id="tab-cart" class="tab">
+  <h2>🛒 Your Cart</h2>
+  <div id="cartItems"></div>
+  <div id="cartTotal"></div>
+  <div class="checkout-form" id="checkoutForm" style="display:none;">
+    <h3>Checkout</h3>
+    <input type="text" id="custName" placeholder="Your Name" required>
+    <input type="text" id="custPhone" placeholder="Phone Number" required>
+    <textarea id="custNote" placeholder="Special notes (optional)"></textarea>
+    <button class="btn-primary" onclick="submitOrder()">Place Order</button>
+  </div>
+</section>
+
+<!-- TRACK ORDER TAB -->
+<section id="tab-track" class="tab">
+  <h2>📦 Track Your Order</h2>
+  <input type="text" id="trackId" placeholder="Enter Order ID (e.g. O1234567890)">
+  <button class="btn-primary" onclick="trackOrder()">Track</button>
+  <div id="trackResult"></div>
+  <div id="chatBox" style="display:none;">
+    <h3>💬 Chat with Kitchen</h3>
+    <div id="chatMessages"></div>
+    <div class="chat-input">
+      <input type="text" id="chatText" placeholder="Type message...">
+      <button onclick="sendChat()">Send</button>
+    </div>
+  </div>
+</section>
+
+<!-- COMMENTS TAB -->
+<section id="tab-comments" class="tab">
+  <h2>💬 Customer Comments</h2>
+  <div class="comment-form">
+    <input type="text" id="commentName" placeholder="Your Name">
+    <textarea id="commentText" placeholder="Leave a comment..."></textarea>
+    <button class="btn-primary" onclick="postComment()">Post Comment</button>
+  </div>
+  <div id="commentsList"></div>
+</section>
+
+<!-- ADMIN LOGIN MODAL -->
+<div id="adminModal" class="modal">
+  <div class="modal-content">
+    <h2>🔒 Admin Login</h2>
+    <input type="password" id="adminPass" placeholder="Admin Password">
+    <button class="btn-primary" onclick="adminLogin()">Login</button>
+    <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<section id="tab-admin" class="tab">
+  <h2>⚙️ Admin Dashboard</h2>
+  <div class="admin-tabs">
+    <button onclick="showAdminTab('orders')">Orders</button>
+    <button onclick="showAdminTab('manage')">Manage Menu</button>
+    <button onclick="showAdminTab('add')">Add Item</button>
+    <button onclick="showAdminTab('comments')">Comments</button>
+    <button onclick="showAdminTab('chats')">Chats</button>
+    <button onclick="resetMenu()" class="btn-danger">Reset Menu</button>
+    <button onclick="adminLogout()" class="btn-secondary">Logout</button>
+  </div>
+
+  <div id="admin-orders" class="admin-tab active"></div>
+  <div id="admin-manage" class="admin-tab"></div>
+  <div id="admin-add" class="admin-tab">
+    <h3>Add New Menu Item</h3>
+    <select id="newCat"></select>
+    <input type="text" id="newCatCustom" placeholder="Or new category name">
+    <input type="text" id="newName" placeholder="Food Name">
+    <input type="number" id="newPrice" placeholder="Price (Naira)">
+    <input type="text" id="newImage" placeholder="Image URL">
+    <button class="btn-primary" onclick="addMenuItem()">Add Item</button>
+  </div>
+  <div id="admin-comments" class="admin-tab"></div>
+  <div id="admin-chats" class="admin-tab"></div>
+</section>
+
+<footer>
+  <p>📞 WhatsApp: 07065214656 | 08033808290</p>
+  <p>🎵 TikTok: Iya Adam Kitchen</p>
+  <p>© 2026 Iya Adam Kitchen — Fresh Ingredients • Hygienic • Great Taste</p>
+</footer>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
